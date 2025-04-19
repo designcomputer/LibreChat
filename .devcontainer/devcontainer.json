@@ -1,18 +1,16 @@
 {
-  "dockerComposeFile": "docker-compose.yml",
+  "name": "LibreChat Dev Container",
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "docker-compose.yml"
+  ],
   "service": "app",
-  "workspaceFolder": "/workspaces",
-  "customizations": {
-    "vscode": {
-      "extensions": [],
-      "settings": {
-        "terminal.integrated.profiles.linux": {
-          "bash": null
-        }
-      }
-    }
+  "workspaceFolder": "/workspaces/LibreChat",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
-  "postCreateCommand": "",
-  "features": { "ghcr.io/devcontainers/features/git:1": {} },
-  "remoteUser": "vscode"
+  "runArgs": ["--privileged"],
+  "postCreateCommand": "dockerd-entrypoint.sh & sleep 5 && docker compose up -d",
+  "forwardPorts": [3080],
+  "shutdownAction": "stopCompose"
 }
